@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Employee Management</title>
+</head>
+<body>
+    <header>
+        <h1>Employee Management System</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="user.html">User Management</a></li>
+            <li><a href="profile_management.html" class="active">Profile Management</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="add-employee">
+            <h2>Add Employee</h2>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+                <label for="position">Position:</label>
+                <input type="text" id="position" required>
+                <label for="department">Department:</label>
+                <input type="text" id="department" required>
+                <button type="submit">Add Employee</button>
+            </form>
+        </section>
+
+        <section id="employee-list">
+            <h2>Employee List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Software Engineer</td>
+                        <td>IT</td>
+                    </tr>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>Project Manager</td>
+                        <td>Management</td>
+                    </tr>
+                    <tr>
+                        <td>Emily Johnson</td>
+                        <td>HR Specialist</td>
+                        <td>HR</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+</body>
+</html>

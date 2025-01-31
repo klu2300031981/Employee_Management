@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home - Management System</title>
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 250px;
+            background-color: #4CAF50;
+            padding: 20px;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            font-size: 1.5em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar button {
+            padding: 10px;
+            border: none;
+            background-color: #388e3c;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar button:hover {
+            background-color: #45a049;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        header {
+            background-color: #f2f2f2;
+            color: #333;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        header h1 {
+            font-size: 2em;
+        }
+
+        /* Content Section Styling */
+        .content-section {
+            display: none;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .content-section h2 {
+            font-size: 1.8em;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        .content-section p {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        /* Form Styling */
+        .form-group, .payroll-form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label, .payroll-form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input, .payroll-form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Employee List Styling */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        ul li .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background-color: #FF9800;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-btn {
+            background-color: #F44336;
+        }
+
+        .action-btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar with navigation buttons -->
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <button onclick="showSection('home')">Home</button>
+        <button onclick="showSection('addEmployee')">Add Employee</button>
+        <button onclick="showSection('employeeList')">Employee List</button>
+        <button onclick="showSection('payroll')">Payroll</button>
+        <button onclick="showSection('attendance')">Attendance</button>
+    </div>
+
+    <!-- Main content area -->
+    <div class="main-content">
+        <header>
+            <h1>Welcome to the Admin Home Page</h1>
+        </header>
+
+        <!-- Home Section -->
+        <div id="home" class="content-section active">
+            <h2>Home</h2>
+            <p>Welcome to the admin home page. Choose an option on the left to get started.</p>
+        </div>
+
+        <!-- Add Employee Section -->
+        <div id="addEmployee" class="content-section">
+            <h2>Add Employee</h2>
+            <form id="addEmployeeForm">
+                <div class="form-group">
+                    <label for="employee-name">Employee Name:</label>
+                    <input type="text" id="employee-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="employee-id">Employee ID:</label>
+                    <input type="text" id="employee-id" pattern="^\d{6}$" title="Employee ID must be exactly 6 digits." required>
+                </div>
+                <div class="form-group">
+                    <label for="employee-phone">Phone Number:</label>
+                    <input type="tel" id="employee-phone" pattern="^\d{10}$" title="Phone number must be exactly 10 digits." required>
+                </div>
+                <div class="form-group">
+                    <label for="employee-email">Email:</label>
+                    <input type="email" id="employee-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="employee-role">Role:</label>
+                    <input type="text" id="employee-role" required>
+                </div>
+                <button type="submit" class="btn">Add Employee</button>
+            </form>
+        </div>
+
+        <!-- Employee List Section -->
+        <div id="employeeList" class="content-section">
+            <h2>Employee List</h2>
+            <ul id="employeeListDisplay">
+                <!-- Employee records will appear here -->
+            </ul>
+        </div>
+
+        <!-- Payroll Section -->
+        <div id="payroll" class="content-section">
+            <h2>Payroll</h2>
+            <form id="payrollForm">
+                <div class="payroll-form-group">
+                    <label for="payroll-employee-id">Employee ID:</label>
+                    <input type="text" id="payroll-employee-id" required>
+                </div>
+                <div class="payroll-form-group">
+                    <label for="payroll-employee-name">Employee Name:</label>
+                    <input type="text" id="payroll-employee-name" required>
+                </div>
+                <div class="payroll-form-group">
+                    <label for="payroll-salary">Salary:</label>
+                    <input type="number" id="payroll-salary" required>
+                </div>
+                <div class="payroll-form-group">
+                    <label for="payroll-bonus">Bonus:</label>
+                    <input type="number" id="payroll-bonus" required>
+                </div>
+                <button type="submit" class="btn">Submit Payroll</button>
+            </form>
+            <ul id="payrollList">
+                <!-- Payroll records will appear here -->
+            </ul>
+        </div>
+
+        <!-- Attendance Section -->
+        <div id="attendance" class="content-section">
+            <h2>Attendance</h2>
+            <form id="attendanceForm">
+                <div class="form-group">
+                    <label for="attendance-employee-id">Employee ID:</label>
+                    <input type="text" id="attendance-employee-id" required>
+                </div>
+                <div class="form-group">
+                    <label for="attendance-employee-name">Employee Name:</label>
+                    <input type="text" id="attendance-employee-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="attendance-date">Date:</label>
+                    <input type="date" id="attendance-date" required>
+                </div>
+                <button type="submit" class="btn">Mark Attendance</button>
+            </form>
+            <ul id="attendanceList">
+                <!-- Attendance records will appear here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const attendanceRecords = [];
+        const payrollRecords = [];
+        const employeeRecords = [];
+
+        // Show content section
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // Handle Add Employee Form submission
+        document.getElementById('addEmployeeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('employee-name').value;
+            const id = document.getElementById('employee-id').value;
+            const phone = document.getElementById('employee-phone').value;
+            const email = document.getElementById('employee-email').value;
+            const role = document.getElementById('employee-role').value;
+
+            const employee = { name, id, phone, email, role };
+            employeeRecords.push(employee);
+            displayEmployeeList();
+            this.reset();
+        });
+
+        // Handle Payroll Form submission
+        document.getElementById('payrollForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const employeeId = document.getElementById('payroll-employee-id').value;
+            const name = document.getElementById('payroll-employee-name').value;
+            const salary = document.getElementById('payroll-salary').value;
+            const bonus = document.getElementById('payroll-bonus').value;
+
+            const payroll = { employeeId, name, salary, bonus };
+            payrollRecords.push(payroll);
+            displayPayrollList();
+            this.reset();
+        });
+
+        // Handle Attendance Form submission
+        document.getElementById('attendanceForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const employeeId = document.getElementById('attendance-employee-id').value;
+            const employeeName = document.getElementById('attendance-employee-name').value;
+            const date = document.getElementById('attendance-date').value;
+
+            const attendance = { employeeId, employeeName, date };
+            attendanceRecords.push(attendance);
+            displayAttendanceList();
+            this.reset();
+        });
+
+        // Display Employee List
+        function displayEmployeeList() {
+            const list = document.getElementById('employeeListDisplay');
+            list.innerHTML = '';
+            employeeRecords.forEach(employee => {
+                const li = document.createElement('li');
+                li.innerHTML = `${employee.name} (${employee.id}) - ${employee.role}
+                                <div class="actions">
+                                    <button class="action-btn edit-btn">Edit</button>
+                                    <button class="action-btn delete-btn">Delete</button>
+                                </div>`;
+                list.appendChild(li);
+            });
+        }
+
+        // Display Payroll List
+        function displayPayrollList() {
+            const list = document.getElementById('payrollList');
+            list.innerHTML = '';
+            payrollRecords.forEach(record => {
+                const li = document.createElement('li');
+                li.innerHTML = `${record.name} - ${record.salary} - ${record.bonus}`;
+                list.appendChild(li);
+            });
+        }
+
+        // Display Attendance List
+        function displayAttendanceList() {
+            const list = document.getElementById('attendanceList');
+            list.innerHTML = '';
+            attendanceRecords.forEach(record => {
+                const li = document.createElement('li');
+                li.innerHTML = `${record.employeeName} (${record.employeeId}) - ${record.date}`;
+                list.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>

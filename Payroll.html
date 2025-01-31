@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 250px;
+            background-color: #4CAF50;
+            padding: 20px;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            font-size: 1.5em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar button {
+            padding: 10px;
+            border: none;
+            background-color: #388e3c;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar button:hover {
+            background-color: #45a049;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        header {
+            background-color: #f2f2f2;
+            color: #333;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        header h1 {
+            font-size: 2em;
+        }
+
+        /* Content Section Styling */
+        .content-section {
+            display: none;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .content-section h2 {
+            font-size: 1.8em;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        /* Form Styling */
+        form label {
+            display: block;
+            margin-top: 10px;
+            font-size: 1.1em;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            background-color: #388e3c;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+        /* Employee Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar with navigation buttons -->
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <button onclick="showSection('payroll')">Payroll</button>
+    </div>
+
+    <!-- Main content area -->
+    <div class="main-content">
+        <header>
+            <h1>Admin Dashboard</h1>
+        </header>
+
+        <!-- Payroll Form Section -->
+        <div id="payroll" class="content-section">
+            <h2>Employee Payroll</h2>
+            <form id="employeeForm">
+                <label for="empName">Employee Name:</label>
+                <input type="text" id="empName" required>
+
+                <label for="empId">Employee ID:</label>
+                <input type="text" id="empId" required>
+
+                <label for="attendance">Attended Days:</label>
+                <input type="number" id="attendance" required>
+
+                <label for="rate">Daily Rate:</label>
+                <input type="number" id="rate" required>
+
+                <button type="button" onclick="addEmployee()">Add Employee</button>
+            </form>
+
+            <h3>Employee Payroll</h3>
+            <table id="employeeList">
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Employee ID</th>
+                        <th>Attended Days</th>
+                        <th>Daily Rate</th>
+                        <th>Total Payroll</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Payroll data will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Function to show selected section
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // Employee data array to store payroll information
+        let employees = [];
+
+        // Function to add employee to payroll list
+        function addEmployee() {
+            const empName = document.getElementById('empName').value;
+            const empId = document.getElementById('empId').value;
+            const attendance = parseInt(document.getElementById('attendance').value);
+            const dailyRate = parseFloat(document.getElementById('rate').value);
+
+            // Validate inputs
+            if (!empName || !empId || isNaN(attendance) || isNaN(dailyRate)) {
+                alert('Please fill in all fields correctly.');
+                return;
+            }
+
+            // Calculate payroll
+            const payroll = attendance * dailyRate;
+
+            // Add employee to the list
+            employees.push({ empName, empId, attendance, dailyRate, payroll });
+
+            // Update the employee payroll table
+            updateEmployeeList();
+
+            // Reset the form
+            document.getElementById('employeeForm').reset();
+        }
+
+        // Function to update the employee payroll table
+        function updateEmployeeList() {
+            const employeeList = document.getElementById('employeeList').getElementsByTagName('tbody')[0];
+            employeeList.innerHTML = ''; // Clear existing data
+
+            employees.forEach(employee => {
+                const row = employeeList.insertRow();
+                row.insertCell(0).textContent = employee.empName;
+                row.insertCell(1).textContent = employee.empId;
+                row.insertCell(2).textContent = employee.attendance;
+                row.insertCell(3).textContent = employee.dailyRate.toFixed(2);
+                row.insertCell(4).textContent = employee.payroll.toFixed(2);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home - Management System</title>
+    <style>
+        /* General Styling */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f9; color: #333; display: flex; min-height: 100vh; }
+        .sidebar { width: 250px; background-color: #4CAF50; padding: 20px; color: #fff; display: flex; flex-direction: column; gap: 15px; box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); }
+        .sidebar h2 { font-size: 1.5em; text-align: center; margin-bottom: 20px; }
+        .sidebar button { padding: 10px; border: none; background-color: #388e3c; color: white; font-size: 16px; border-radius: 5px; cursor: pointer; text-align: left; transition: background-color 0.3s ease; }
+        .sidebar button:hover { background-color: #45a049; }
+        .main-content { flex: 1; padding: 30px; }
+        header { background-color: #f2f2f2; color: #333; padding: 15px; text-align: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-bottom: 20px; border-radius: 5px; }
+        header h1 { font-size: 2em; }
+        .content-section { display: none; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .content-section.active { display: block; }
+        .content-section h2 { font-size: 1.8em; color: #4CAF50; margin-bottom: 15px; }
+        .content-section p { font-size: 1.1em; color: #666; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <button onclick="showSection('home')">Home</button>
+        <button onclick="showSection('attendance')">Attendance</button>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Welcome to the Admin Home Page</h1>
+        </header>
+
+        <div id="home" class="content-section active">
+            <h2>Home</h2>
+            <p>Welcome to the admin home page. Choose an option on the left to get started.</p>
+        </div>
+
+        <div id="attendance" class="content-section">
+            <h2>Employee Attendance</h2>
+            <button onclick="showSection('home')">Back to Dashboard</button>
+
+            <section class="attendance-results">
+                <h4>Attendance Record</h4>
+                <table id="attendance-table">
+                    <thead>
+                        <tr>
+                            <th>Employee Name</th>
+                            <th>Present Days</th>
+                            <th>Absent Days</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendance-table-body">
+                        <!-- Attendance data dynamically generated -->
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const employeeNames = [
+            "John Doe", "Jane Smith", "Alice Johnson", "Bob Brown", "Charlie Davis",
+            "Eve White", "Frank Green", "Grace Lee", "Hank Black", "Ivy Clark"
+        ];
+
+        function generateAttendanceData() {
+            const attendanceTableBody = document.getElementById("attendance-table-body");
+            attendanceTableBody.innerHTML = ""; // Clear previous data
+
+            employeeNames.forEach(employee => {
+                // Generate random values for attendance
+                const presentDays = Math.floor(Math.random() * 6); // Present days (0-5)
+                const absentDays = 5 - presentDays;
+
+                // Create a new row
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${employee}</td>
+                    <td>${presentDays}</td>
+                    <td>${absentDays}</td>
+                `;
+                attendanceTableBody.appendChild(row);
+            });
+        }
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            
+            if (sectionId === 'attendance') {
+                generateAttendanceData(); // Update data whenever attendance section is shown
+            }
+        }
+    </script>
+</body>
+</html>

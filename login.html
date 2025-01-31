@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Registration System</title>
+    <style>
+        /* General form container */
+        .form-container {
+            background-color: #f2f2f2;
+            padding: 30px;
+            width: 400px;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .form-container p {
+            text-align: center;
+        }
+
+        .form-container a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .form-container a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hide forms initially */
+        #registrationForm, #loginTypeContainer, #adminLoginContainer, #userLoginContainer {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Management System</h1>
+    </header>
+
+    <main>
+        <!-- Registration Form -->
+        <div class="form-container" id="registrationForm">
+            <h2>Register Form</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="reg-username">Username:</label>
+                    <input type="text" id="reg-username" maxlength="20" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Password:</label>
+                    <input type="password" id="reg-password" maxlength="12" required>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" id="showLoginForm">Login here</a>.</p>
+            <p>Back to home page ? <a href="home1.html" id="showHomePage">Home Page</a>.</p>
+        </div>
+
+        <!-- Login Type Selection -->
+        <div class="form-container" id="loginTypeContainer">
+            <h2>Login Type</h2>
+            <p>Choose your login type:</p>
+            <button id="adminLoginButton" class="btn">Login as Admin</button>
+            <button id="userLoginButton" class="btn">Login as User</button>
+        </div>
+
+        <!-- Admin Login Form -->
+        <div class="form-container" id="adminLoginContainer">
+            <h2>Admin Login Form</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="admin-username">Username:</label>
+                    <input type="text" id="admin-username" maxlength="20" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Password:</label>
+                    <input type="password" id="admin-password" maxlength="12" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p><a href="#" id="backToLogin">Back to Login Options</a></p>
+        </div>
+
+        <!-- User Login Form -->
+        <div class="form-container" id="userLoginContainer">
+            <h2>User Login Form</h2>
+            <form id="userLoginForm">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p><a href="#" id="backToLoginUser">Back to Login Options</a></p>
+        </div>
+    </main>
+
+    <script>
+        // Get form elements
+        const registrationForm = document.getElementById('registrationForm');
+        const loginTypeContainer = document.getElementById('loginTypeContainer');
+        const adminLoginContainer = document.getElementById('adminLoginContainer');
+        const userLoginContainer = document.getElementById('userLoginContainer');
+        const showLoginFormLink = document.getElementById('showLoginForm');
+        const registerForm = document.getElementById('registerForm');
+        const adminLoginButton = document.getElementById('adminLoginButton');
+        const userLoginButton = document.getElementById('userLoginButton');
+        const backToLogin = document.getElementById('backToLogin');
+        const backToLoginUser = document.getElementById('backToLoginUser');
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        const userLoginForm = document.getElementById('userLoginForm');
+
+        // Show registration form by default
+        window.onload = function() {
+            registrationForm.style.display = 'block';
+        };
+
+        // Show login type options when "Login here" is clicked after registration
+        showLoginFormLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            registrationForm.style.display = 'none';
+            loginTypeContainer.style.display = 'block';
+        });
+
+        // Show admin login form
+        adminLoginButton.addEventListener('click', function() {
+            loginTypeContainer.style.display = 'none';
+            adminLoginContainer.style.display = 'block';
+        });
+
+        // Show user login form
+        userLoginButton.addEventListener('click', function() {
+            loginTypeContainer.style.display = 'none';
+            userLoginContainer.style.display = 'block';
+        });
+
+        // Handle registration form submission (Validate fields)
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('reg-username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('reg-password').value;
+
+            const usernameValid = username.length <= 20;
+
+            // Password validation: must contain at least one letter, one number, and one special character
+            const passwordValid = /[A-Za-z]/.test(password) && /\d/.test(password) && /[!@#$%^&*(),.?":{}|<>]/.test(password) && password.length <= 12;
+
+            if (!usernameValid) {
+                alert('Username must be 20 characters or less.');
+                return;
+            }
+
+            if (!passwordValid) {
+                alert('Password must contain at least one letter, one number, and one special character, and must be no longer than 12 characters.');
+                return;
+            }
+
+            alert("Registration successful! Please choose a login option.");
+            registrationForm.style.display = 'none';
+            loginTypeContainer.style.display = 'block';
+        });
+
+        // Handle admin login form submission (Redirect to admin home page)
+        adminLoginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('admin-password').value;
+
+            // Admin password validation
+            const passwordValid = /[A-Za-z]/.test(password) && /\d/.test(password) && /[!@#$%^&*(),.?":{}|<>]/.test(password) && password.length <= 12;
+
+            if (!passwordValid) {
+                alert('Password must contain at least one letter, one number, and one special character, and must be no longer than 12 characters.');
+                return;
+            }
+
+            alert("Admin login successful! Redirecting to admin home page...");
+            window.location.href = 'admin_home.html';  // Redirect to admin home page
+        });
+
+        // Handle user login form submission (Redirect to user home page)
+        userLoginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+
+            // User password validation
+            const passwordValid = /[A-Za-z]/.test(password) && /\d/.test(password) && /[!@#$%^&*(),.?":{}|<>]/.test(password) && password.length <= 12;
+
+            if (!passwordValid) {
+                alert('Password must contain at least one letter, one number, and one special character, and must be no longer than 12 characters.');
+                return;
+            }
+
+            alert("User login successful! Redirecting to user home page...");
+            window.location.href = 'user_home.html';  // Redirect to user home page
+        });
+
+        // Back to login options from Admin login form
+        backToLogin.addEventListener('click', function(e) {
+            e.preventDefault();
+            adminLoginContainer.style.display = 'none';
+            loginTypeContainer.style.display = 'block';
+        });
+
+        // Back to login options from User login form
+        backToLoginUser.addEventListener('click', function(e) {
+            e.preventDefault();
+            userLoginContainer.style.display = 'none';
+            loginTypeContainer.style.display = 'block';
+        });
+    </script>
+
+</body>
+</html>
