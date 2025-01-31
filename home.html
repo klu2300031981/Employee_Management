@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User & Admin Login</title>
+    <style>
+        /* General form container */
+        .form-container {
+            background-color: #f2f2f2;
+            padding: 30px;
+            width: 400px;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Hide login forms by default */
+        #userLoginContainer, #adminLoginContainer {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Type Selection -->
+    <div class="form-container" id="loginTypeContainer">
+        <h2>Login Type</h2>
+        <p>Choose your login type:</p>
+        <button id="userLoginButton" class="btn">Login as User</button>
+        <button id="adminLoginButton" class="btn">Login as Admin</button>
+    </div>
+
+    <!-- User Login Form -->
+    <div class="form-container" id="userLoginContainer">
+        <h2>User Login Form</h2>
+        <form id="userLoginForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+
+    <!-- Admin Login Form -->
+    <div class="form-container" id="adminLoginContainer">
+        <h2>Admin Login Form</h2>
+        <form id="adminLoginForm">
+            <div class="form-group">
+                <label for="admin-username">Username:</label>
+                <input type="text" id="admin-username" required>
+            </div>
+            <div class="form-group">
+                <label for="admin-password">Password:</label>
+                <input type="password" id="admin-password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+     
+    <script>
+        // Get elements
+        const loginTypeContainer = document.getElementById('loginTypeContainer');
+        const userLoginContainer = document.getElementById('userLoginContainer');
+        const adminLoginContainer = document.getElementById('adminLoginContainer');
+        const userLoginButton = document.getElementById('userLoginButton');
+        const adminLoginButton = document.getElementById('adminLoginButton');
+
+        // Show user login form when "Login as User" is clicked
+        userLoginButton.addEventListener('click', function() {
+            loginTypeContainer.style.display = 'none';
+            userLoginContainer.style.display = 'block';
+        });
+
+        // Show admin login form when "Login as Admin" is clicked
+        adminLoginButton.addEventListener('click', function() {
+            loginTypeContainer.style.display = 'none';
+            adminLoginContainer.style.display = 'block';
+        });
+
+        // Handle user login form submission (Redirect to home page)
+        document.getElementById('userLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("User login successful! Redirecting to home page...");
+            window.location.href = 'home.html';  // Redirect to the home page after successful login
+        });
+
+        // Handle admin login form submission (Redirect to home page)
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("Admin login successful! Redirecting to home page...");
+            window.location.href = 'home.html';  // Redirect to the home page after successful login
+        });
+    </script>
+
+</body>
+</html>

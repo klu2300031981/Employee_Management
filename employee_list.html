@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Employee List</title>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>Management System</h1>
+        </div>
+        <div class="header-right">
+            <nav>
+                <ul id="navbar">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="add_employee.html">Add Employee</a></li>
+                    <li><a href="employee_list.html" class="active">Employee List</a></li>
+                    <li><a href="profile_management.html">Profile Management</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="table-container">
+            <h2>Employee List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Department</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTableBody"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        const employeeTableBody = document.getElementById('employeeTableBody');
+
+        function updateTable() {
+            const employees = JSON.parse(localStorage.getItem('employees')) || [];
+            employeeTableBody.innerHTML = ''; // Clear the table body
+
+            employees.forEach((employee, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${employee.name}</td>
+                    <td>${employee.email}</td>
+                    <td>${employee.phone}</td>
+                    <td>${employee.dept}</td>
+                    <td>${employee.address}</td>
+                    <td><button onclick="deleteEmployee(${index})" class="btn">Delete</button></td>
+                `;
+                employeeTableBody.appendChild(row);
+            });
+        }
+
+        function deleteEmployee(index) {
+            const employees = JSON.parse(localStorage.getItem('employees')) || [];
+            employees.splice(index, 1); // Remove employee from the array
+            localStorage.setItem('employees', JSON.stringify(employees)); // Update local storage
+            updateTable(); // Refresh the table
+        }
+
+        // Initial table population
+        updateTable();
+    </script>
+</body>
+</html>

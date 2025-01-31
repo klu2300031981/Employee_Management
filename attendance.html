@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Management</title>
+    <link rel="stylesheet" href="attendance-management.css">
+    <script>
+        function addAttendance(event) {
+            event.preventDefault(); // Prevent form from submitting normally
+
+            // Get the values from the form
+            const date = document.querySelector('input[name="date"]').value;
+            const status = document.querySelector('select[name="status"]').value;
+
+            // Create a new row and cells for date and status
+            const table = document.getElementById("attendance-table");
+            const newRow = table.insertRow();
+            const dateCell = newRow.insertCell(0);
+            const statusCell = newRow.insertCell(1);
+
+            // Set cell content
+            dateCell.textContent = date;
+            statusCell.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+
+            // Clear the form after submission
+            document.querySelector('form').reset();
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h2>Attendance Management</h2>
+    </header>
+
+    <section class="attendance-form">
+        <form onsubmit="addAttendance(event)">
+            <input type="date" name="date" required>
+            <select name="status">
+                <option value="present">Present</option>
+                <option value="absent">Absent</option>
+                <option value="leave">On Leave</option>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <section class="attendance-table">
+        <h3>Your Attendance History</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="attendance-table">
+                <!-- Existing entries (if any) -->
+                <tr>
+                    <td>2024-11-01</td>
+                    <td>Present</td>
+                </tr>
+                <tr>
+                    <td>2024-11-02</td>
+                    <td>Absent</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</body>
+</html>

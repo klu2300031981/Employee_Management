@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <style>
+        /* General form container */
+        .form-container {
+            background-color: #f2f2f2;
+            padding: 30px;
+            width: 400px;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Hide login form by default */
+        #userLoginContainer {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Type Selection -->
+    <div class="form-container" id="loginTypeContainer">
+        <h2>Login Type</h2>
+        <p>Choose your login type:</p>
+        <button id="userLoginButton" class="btn">Login as User</button>
+        <button id="adminLoginButton" class="btn">Login as Admin</button>
+    </div>
+
+    <!-- User Login Form -->
+    <div class="form-container" id="userLoginContainer">
+        <h2>User Login Form</h2>
+        <form id="userLoginForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+     
+    <script>
+        // Get elements
+        const loginTypeContainer = document.getElementById('loginTypeContainer');
+        const userLoginContainer = document.getElementById('userLoginContainer');
+        const userLoginButton = document.getElementById('userLoginButton');
+
+        // Show user login form when "Login as User" is clicked
+        userLoginButton.addEventListener('click', function() {
+            loginTypeContainer.style.display = 'none';
+            userLoginContainer.style.display = 'block';
+        });
+
+        // Handle user login form submission (Redirect to user home page)
+        document.getElementById('userLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("User login successful! Redirecting to user home page...");
+            window.location.href = 'user_home.html';  // Redirect to user home page after successful login
+        });
+    </script>
+    <script>
+        // Handle the form submission for User login
+        document.getElementById("userLoginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            
+            // Get the user login details
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            
+            // Here, add logic to validate the user credentials (e.g., via an API or check against a list)
+            if (username && password) {
+                // If validation is successful, redirect to the user home page
+                window.location.href = "user_home.html"; // Redirect to the User Home page
+            } else {
+                alert("Please enter both username and password.");
+            }
+        });
+    </script>
+    
+
+</body>
+</html>

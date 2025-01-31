@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Profile Display</title>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>Management System</h1>
+        </div>
+        <div class="header-right">
+            <nav>
+                <ul id="navbar">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="add_employee.html">Add Employee</a></li>
+                    <li><a href="employee_list.html">Employee List</a></li>
+                    <li><a href="profile_management.html">Profile Management</a></li>
+                    <li><a href="Payroll.html">Payroll </a></li>
+
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="form-container" style="width: 600px;">
+            <h2>Profile Details</h2>
+            <div id="profileDetails">
+                <!-- Profile information will be injected here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Fetch profile details from localStorage
+        const profileDetailsDiv = document.getElementById('profileDetails');
+        const updatedProfile = JSON.parse(localStorage.getItem('userProfile'));
+
+        if (updatedProfile) {
+            const profileDetails = `
+                <p><strong>Username:</strong> ${updatedProfile.username}</p>
+                <p><strong>Email:</strong> ${updatedProfile.email}</p>
+                <p><strong>Phone Number:</strong> ${updatedProfile.phone}</p>
+                <p><strong>Address:</strong> ${updatedProfile.address}</p>
+                <p><strong>Department:</strong> ${updatedProfile.dept || 'N/A'}</p>
+            `;
+
+            profileDetailsDiv.innerHTML = profileDetails;
+        } else {
+            profileDetailsDiv.innerHTML = '<p>No profile details found.</p>';
+        }
+    </script>
+</body>
+</html>

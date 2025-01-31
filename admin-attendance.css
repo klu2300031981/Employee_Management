@@ -1,0 +1,109 @@
+/* admin-attendance.css */
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #4CAF50; /* Updated color */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+h2, h3 {
+    margin: 0;
+}
+
+h3 {
+    color: #333;
+    margin-top: 20px;
+}
+
+/* Search Form */
+.search-form {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-form label {
+    font-size: 1.1em;
+    color: #333;
+}
+
+.search-form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.search-form button {
+    background-color: #4CAF50; /* Updated color */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: #45a049; /* Slightly darker green for hover */
+}
+
+/* Attendance Results */
+.attendance-results {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.attendance-results table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.attendance-results th, .attendance-results td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.attendance-results th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    background-color: #4CAF50; /* Updated color for header */
+    color: white;
+}
+
+.attendance-results td {
+    background-color: #fff;
+}
+
+.attendance-results td[colspan="2"] {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .search-form, .attendance-results {
+        margin: 10px;
+        padding: 15px;
+    }
+}

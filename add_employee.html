@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Add Employee</title>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>Management System</h1>
+        </div>
+        <div class="header-right">
+            <nav>
+                <ul id="navbar">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="add_employee.html" class="active">Add Employee</a></li>
+                    <li><a href="employee_list.html">Employee List</a></li>
+                    <li><a href="profile_management.html" class="active">Profile Management</a></li>
+
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h2>Add Employee</h2>
+            <form id="addEmployeeForm">
+                <div class="form-group">
+                    <label for="employeeName">Employee Name:</label>
+                    <input type="text" id="employeeName" required>
+                </div>
+                <div class="form-group">
+                    <label for="employeeEmail">Email:</label>
+                    <input type="email" id="employeeEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="employeePhone">Phone Number (10 digits):</label>
+                    <input type="tel" id="employeePhone" pattern="\d{10}" maxlength="10" required title="Please enter a valid 10-digit mobile number." onkeypress="return isNumber(event)">
+                </div>
+                <div class="form-group">
+                    <label for="employeeDept">Department:</label>
+                    <input type="text" id="employeeDept" required>
+                </div>
+                <div class="form-group">
+                    <label for="employeeAddress">Address:</label>
+                    <input type="text" id="employeeAddress" required>
+                </div>
+                <button type="submit" class="btn">Add Employee</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        const form = document.getElementById('addEmployeeForm');
+        
+        // Function to allow only numeric input
+        function isNumber(event) {
+            const char = String.fromCharCode(event.which);
+            if (!(/[0-9]/.test(char)) || event.target.value.length >= 10) {
+                event.preventDefault();
+            }
+        }
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const employeeName = document.getElementById('employeeName').value;
+            const employeeEmail = document.getElementById('employeeEmail').value;
+            const employeePhone = document.getElementById('employeePhone').value;
+            const employeeDept = document.getElementById('employeeDept').value;
+            const employeeAddress = document.getElementById('employeeAddress').value;
+
+            // Validate phone number
+            if (!/^\d{10}$/.test(employeePhone)) {
+                alert("Please enter a valid 10-digit mobile number.");
+                return;
+            }
+
+            const employee = {
+                name: employeeName,
+                email: employeeEmail,
+                phone: employeePhone,
+                dept: employeeDept,
+                address: employeeAddress
+            };
+
+            let employees = JSON.parse(localStorage.getItem('employees')) || [];
+            employees.push(employee);
+            localStorage.setItem('employees', JSON.stringify(employees));
+
+            window.location.href = 'employee_list.html';
+        });
+    </script>
+</body>
+</html>
